@@ -4,7 +4,7 @@ pipeline{
         maven 'maven391'
     }
     stages {
-        stage('Parrallélisation') {
+        stage('Parallelization') {
             parallel(){
                 stage('Echo') {
                     steps {
@@ -16,7 +16,6 @@ pipeline{
                 stage('Unit test') {
                     steps {
                          sh 'mvn test'
-                         junit 'target/surefire-reports/*.xml'
                     }
                 }
             }
@@ -24,8 +23,13 @@ pipeline{
         stage('Package') {
             steps {
                 sh 'mvn package -DskipTest'
-                archiveArtifacts artifacts: 'target/*.jar'
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/*.jar'
+            junit 'target/surefire-reports/*.xml'
         }
     }
 }
