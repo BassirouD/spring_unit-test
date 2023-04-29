@@ -22,7 +22,7 @@ class SprintUnitTestApplicationTests {
     @Test
     void assertThanOnePlusTwoIsThree() {
         int somme = 1 + 2;
-        assertThat(somme).isEqualTo(2);
+        assertThat(somme).isEqualTo(3);
     }
 
 }
