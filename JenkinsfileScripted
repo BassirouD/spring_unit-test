@@ -8,4 +8,4 @@ node {
         sh "${mvn}  --version"
     }
 }
-Test webhook2
+Test webhook
