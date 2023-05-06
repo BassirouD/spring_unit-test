@@ -1,0 +1,15 @@
+pipeline{
+    agent any
+    tools {
+        maven 'maven391'
+    }
+    stages {
+        stage('Scan with sonarqube') {
+            steps {
+                withSonarQubeEnv('SonarQube'){
+                    sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=sonar-jenkins -Dsonar.projectName='sonar-jenkins' -Dsonar.host.url=https://bccb-46-193-17-3.ngrok-free.app -Dsonar.token=sqp_af5b48ed5b604cc996fca22bd7737dcc34fe27be'
+                }
+            }
+        }
+    }
+}
