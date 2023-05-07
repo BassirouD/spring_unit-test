@@ -27,15 +27,28 @@ pipeline{
             }
         }
 
-        
+        stage('Build docker image') {
+            steps {
+                sh 'docker build -t freemanpolys/test:v1.0.0 .'
+                script {
+                    try {
+                        sh 'docker rm -f test'
+                    }catch (exc){
+                        echo 'Image docker not exist...'
+                    }
+                }
+                sh 'docker run --name test -d -p 8088:8088 freemanpolys/test:v1.0.0'
+            }
+        }
 
         stage('Scan with sonarqube') {
             steps {
                 withSonarQubeEnv(installationName: 'SonarQube'){
-                    sh "mvn clean verify sonar:sonar -Dsonar.projectKey=sonar -Dsonar.projectName='sonar' -Dsonar.host.url=https://bccb-46-193-17-3.ngrok-free.app -Dsonar.token=sqp_dd87142d1008a35c8d4895bddaa2328e28a9f25c"
+                    sh "mvn clean verify sonar:sonar -Dsonar.projectKey=sonar -Dsonar.projectName='sonar' -Dsonar.host.url=https://bccb-46-193-17-3.ngrok-free.app -Dsonar.token=sqp_85d47d436e3423c94f7665a4445a8e5104a8c91f"
                 }
             }
         }
+
     }
     post {
         always {
