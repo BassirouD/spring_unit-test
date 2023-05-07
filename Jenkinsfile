@@ -27,20 +27,15 @@ pipeline{
             }
         }
 
-        stage('Build docker image') {
+        
+
+        stage('Scan with sonarqube') {
             steps {
-                sh 'docker build -t freemanpolys/test:v1.0.0 .'
-                script {
-                    try {
-                        sh 'docker rm -f test'
-                    }catch (exc){
-                        echo 'Image docker not exist...'
-                    }
+                withSonarQubeEnv(installationName: 'SonarQube'){
+                    sh "mvn clean verify sonar:sonar -Dsonar.projectKey=sonar -Dsonar.projectName='sonar' -Dsonar.host.url=https://bccb-46-193-17-3.ngrok-free.app -Dsonar.token=sqp_dd87142d1008a35c8d4895bddaa2328e28a9f25c"
                 }
-                sh 'sudo docker run --name test -d -p 8088:8088 freemanpolys/test:v1.0.0'
             }
         }
-
     }
     post {
         always {
