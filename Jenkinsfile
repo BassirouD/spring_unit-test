@@ -27,7 +27,13 @@ pipeline{
             }
         }
 
-      
+       stage('Scan with sonarqube') {
+                   steps {
+                       withSonarQubeEnv(installationName: 'SonarQube'){
+                           sh "mvn clean verify sonar:sonar -Dsonar.projectKey=sonar -Dsonar.projectName='sonar' -Dsonar.host.url=https://bccb-46-193-17-3.ngrok-free.app -Dsonar.token=sqp_85d47d436e3423c94f7665a4445a8e5104a8c91f"
+                       }
+                   }
+               }
 
     }
     post {
