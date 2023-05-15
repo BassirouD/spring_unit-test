@@ -30,7 +30,7 @@ pipeline{
        stage('Scan with sonarqube') {
                    steps {
                        withSonarQubeEnv(installationName: 'SonarQube'){
-                           sh "mvn clean verify sonar:sonar -Dsonar.projectKey=sonar -Dsonar.projectName='sonar' -Dsonar.host.url=https://074b-46-193-17-3.ngrok-free.app -Dsonar.token=sqp_85d47d436e3423c94f7665a4445a8e5104a8c91f"
+                           sh "mvn clean verify sonar:sonar -Dsonar.projectKey=test -Dsonar.projectName='test' -Dsonar.host.url=https://83bd-46-193-17-3.ngrok-free.app -Dsonar.token=sqp_eaac764f3ea7380f065f56f0dd0849884eee9add"
                        }
                    }
                }
